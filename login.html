@@ -76,13 +76,22 @@
                 <label>Password</label>
                 <input type="password" id="login_password" required="">
             </div>
-            <button type="submit">Login</button>
+            <button type="submit" class="submit">Login</button>
         </form>
 
 
         <p style="margin-top: 15px; font-size: 14px;">Don't have an account? <a href="register.html">Register
                 here</a></p>
     </div>
+
+
+    <script src="js/login.js"></script>
+
+    <script>
+        if (localStorage.getItem("loggedIn") === "true") {
+            window.location.replace("index.html");
+        }
+    </script>
 </body>
 
 </html>
