@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Fintrack Pro</title>
+
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f7f6;
+            margin: 0;
+        }
+
+        .authentic_card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+        }
+
+        .form_group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            margin-top: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        a {
+            color: #0056b3;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="authentic_card">
+        <h2>Welcome Back</h2>
+        <p>Login to FinTrack Pro</p>
+
+        <form id="login_form">
+            <div class="form_group">
+                <label>Username</label>
+                <input type="text" id="login_username" required="">
+            </div>
+            <div class="form_group">
+                <label>Password</label>
+                <input type="password" id="login_password" required="">
+            </div>
+            <button type="submit">Login</button>
+        </form>
+
+
+        <p style="margin-top: 15px; font-size: 14px;">Don't have an account? <a href="register.html">Register
+                here</a></p>
+    </div>
+</body>
+
+</html>
