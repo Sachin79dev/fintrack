@@ -13,13 +13,13 @@ loginForm.addEventListener('submit', (e) => {
     let userInfo = [];
 
 
-    const user = username.value;
+    const name = username.value;
     const pass = password.value;
 
-    userInfo.push({ user, pass });
+    userInfo.push({ name, pass });
 
 
-    if (user.trim() === "" || pass.trim() === "") {
+    if (name.trim() === "" || pass.trim() === "") {
         return
     }
 
@@ -28,9 +28,11 @@ loginForm.addEventListener('submit', (e) => {
     loginForm.reset();
 
 
-    let users = localStorage.setItem('registeredUsers', JSON.stringify(userInfo));
+    const registeredUser = JSON.parse(
+        localStorage.getItem("registeredUsers")
+    );
 
-    if (!users) {
+    if (!registeredUser) {
         alert("No registered users found. Please register first.");
         window.location.href = "register.html";
         return;
@@ -38,7 +40,7 @@ loginForm.addEventListener('submit', (e) => {
 
 
 
-    if (user === userInfo[0].user && pass === userInfo[0].pass) {
+    if (name === registeredUser[0].name && pass === registeredUser[0].pass) {
         localStorage.setItem('loggedIn', 'true');
         window.location.href = "index.html";
     } else {

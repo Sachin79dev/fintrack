@@ -7,13 +7,16 @@ const password = document.querySelector('#register_password');
 registerForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const userInfo = {
-        name: username.value,
-        pass: password.value
-    }
+    const userInfo = [
+        {
+            name: username.value,
+            pass: password.value
+        }   
+    ]
 
 
     localStorage.setItem('registeredUsers', JSON.stringify(userInfo));
+    // localStorage.setItem('registeredUsers', JSON.stringify(userInfo));
 
 
     alert("Registration successful! Please login.");

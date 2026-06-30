@@ -930,7 +930,24 @@
 
 
     <script>
-        window.location.href = "login";
+        const username = document.querySelector("#topbarName");
+
+        if (localStorage.getItem("loggedIn") !== "true") {
+            window.location.replace("login.html");
+            
+        }
+
+
+        if (localStorage.getItem("loggedIn") === "true") {
+            username.textContent = localStorage.getItem("name")
+        }
+
+
+
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            localStorage.removeItem("loggedIn");
+            window.location.replace("login.html");
+        });        
     </script>
 
     <script src="js/auth.js"></script>
