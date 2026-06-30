@@ -14,7 +14,6 @@ registerForm.addEventListener('submit', (e) => {
 
 
     localStorage.setItem('registeredUsers', JSON.stringify(userInfo));
-    // localStorage.setItem('registeredUsers', JSON.stringify(userInfo));
 
 
     alert("Registration successful! Please login.");

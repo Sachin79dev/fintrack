@@ -7,6 +7,11 @@ const mainView = document.querySelector("#dashboard-view");
 const modal = document.querySelector("#openAddModalBtn");
 const modalContent = document.querySelector("#transactionModal");
 const closeModalBtn = document.querySelector(".close-modal");
+const modalForm = document.querySelector("#transactionForm");
+const taskBody = document.querySelector("#transactionTableBody");
+const taskArr = JSON.parse(localStorage.getItem("transactions")) || [];
+
+
 
 const loggedIn = localStorage.getItem("loggedIn");
 const userName = localStorage.getItem("userName");
@@ -68,3 +73,63 @@ closeModalBtn.addEventListener("click", () => {
 
 
 
+let taskUi = () => {
+    taskBody.innerHTML = "";
+    taskArr.forEach((transaction, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${transaction.type}</td>
+            <td>${transaction.description}</td>
+            <td>${transaction.amount.toFixed(2)}</td>
+            <td>${transaction.date}</td>
+            <td>${transaction.category}</td>
+            <td>
+                <button class="action-btn btn-edit" onclick="editTransaction()"><i class="fa-solid fa-pen"></i></button>
+                <button class="action-btn btn-delete" onclick="deleteTransaction()"><i class="fa-solid fa-trash"></i></button>
+            </td>
+        `;
+        taskBody.appendChild(row);
+    });
+
+}
+
+
+
+
+modalForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+
+    const txType = document.querySelector("#txType");
+    const txDescription = document.querySelector("#txDescription");
+    const txAmount = document.querySelector("#txAmount");
+    const txDate = document.querySelector("#txDate");
+    const txCategory = document.querySelector("#txCategory");
+
+
+    if (txDescription.value.trim() === "" || txAmount.value.trim() === "" || txDate.value.trim() === "" || txCategory.value.trim() === "") {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+
+    const transaction = {
+        type: txType.value,
+        description: txDescription.value,
+        amount: parseFloat(txAmount.value),
+        date: txDate.value,
+        category: txCategory.value
+    }
+
+
+    console.log("Transaction submitted:", transaction);
+
+
+    taskArr.push(transaction);
+    localStorage.setItem("transactions", JSON.stringify(taskArr));
+
+    taskUi();
+
+    modalContent.classList.remove("active");
+    modalForm.reset();
+});
