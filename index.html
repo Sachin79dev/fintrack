@@ -106,6 +106,7 @@
             margin-bottom: 8px;
             font-weight: 500;
             transition: all 0.2s;
+            cursor: pointer;
         }
 
         .nav-item:hover,
@@ -195,6 +196,11 @@
             color: var(--text-dark);
         }
 
+
+        body.dark-theme #logoutBtn{
+            color: var(--text-dark);
+        }
+
         .user-info .plan {
             font-size: 12px;
         }
@@ -257,6 +263,10 @@
             border-radius: 6px;
             cursor: pointer;
             font-weight: 500;
+        }
+
+        body.dark-theme .btn-primary {
+            background: #3b82f6;
         }
 
         .full-width {
@@ -699,9 +709,9 @@
             </div>
 
             <nav class="nav-menu">
-                <a href="#" class="nav-item active" data-target="dashboard-view"><i class="fa-solid fa-border-all"></i>
+                <a class="nav-item active" data-target="dashboard-view"><i class="fa-solid fa-border-all"></i>
                     Dashboard</a>
-                <a href="#" class="nav-item" data-target="settings-view"><i class="fa-solid fa-gear"></i> Settings</a>
+                <a class="nav-item" data-target="settings-view"><i class="fa-solid fa-gear"></i> Settings</a>
             </nav>
 
             <button class="add-btn" id="openAddModalBtn">
@@ -868,7 +878,7 @@
 
 
 
-    <!-- <div id="transactionModal" class="modal">
+    <div id="transactionModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="modalTitle">Add Transaction</h3>
@@ -917,40 +927,9 @@
                 <button type="submit" class="btn-primary full-width mt-1">Save Transaction</button>
             </form>
         </div>
-    </div> -->
+    </div>
 
-
-
-
-
-
-
-
-
-
-
-    <script>
-        const username = document.querySelector("#topbarName");
-
-        if (localStorage.getItem("loggedIn") !== "true") {
-            window.location.replace("login.html");
-            
-        }
-
-
-        if (localStorage.getItem("loggedIn") === "true") {
-            username.textContent = localStorage.getItem("name")
-        }
-
-
-
-        document.getElementById("logoutBtn").addEventListener("click", () => {
-            localStorage.removeItem("loggedIn");
-            window.location.replace("login.html");
-        });        
-    </script>
-
-    <script src="js/auth.js"></script>
+    <script src="js/script.js"></script>
 </body>
 
 </html>

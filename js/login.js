@@ -10,20 +10,13 @@ let login = localStorage.getItem('loggedIn');
 loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    let userInfo = [];
-
-
     const name = username.value;
     const pass = password.value;
-
-    userInfo.push({ name, pass });
 
 
     if (name.trim() === "" || pass.trim() === "") {
         return
     }
-
-    console.log(userInfo);
 
     loginForm.reset();
 
@@ -40,9 +33,11 @@ loginForm.addEventListener('submit', (e) => {
 
 
 
-    if (name === registeredUser[0].name && pass === registeredUser[0].pass) {
+    if (name === registeredUser.name && pass === registeredUser.pass) {
         localStorage.setItem('loggedIn', 'true');
+        localStorage.setItem("userName", registeredUser.name);
         window.location.href = "index.html";
+
     } else {
         alert("Invalid email or password.");
     }
