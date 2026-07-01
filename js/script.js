@@ -10,6 +10,10 @@ const closeModalBtn = document.querySelector(".close-modal");
 const modalForm = document.querySelector("#transactionForm");
 const taskBody = document.querySelector("#transactionTableBody");
 const taskArr = JSON.parse(localStorage.getItem("transactions")) || [];
+const displayBal = document.querySelector("#displayBalance");
+const displayIncome = document.querySelector("#displayIncome");
+const displayCount = document.querySelector("#displayCount");
+const displayExpenses = document.querySelector("#displayexpense");
 
 
 
@@ -78,11 +82,10 @@ let taskUi = () => {
     taskArr.forEach((transaction, index) => {
         const row = document.createElement("tr");
         row.innerHTML = `
-            <td>${transaction.type}</td>
-            <td>${transaction.description}</td>
-            <td>${transaction.amount.toFixed(2)}</td>
             <td>${transaction.date}</td>
+            <td>${transaction.description}</td>
             <td>${transaction.category}</td>
+            <td>${transaction.amount.toFixed(2)}</td>
             <td>
                 <button class="action-btn btn-edit" onclick="editTransaction()"><i class="fa-solid fa-pen"></i></button>
                 <button class="action-btn btn-delete" onclick="deleteTransaction()"><i class="fa-solid fa-trash"></i></button>
@@ -94,6 +97,28 @@ let taskUi = () => {
 }
 
 
+
+
+let updateDashboard = () => {
+    taskUi();
+
+    const totalIncome = taskArr.reduce((acc, tx) => {
+        return tx.type === "income" ? acc + tx.amount : acc;
+    }, 0);
+
+    const totalExpenses = taskArr.reduce((acc, tx) => {
+        return tx.type === "expense" ? acc + tx.amount : acc;
+    }, 0);
+
+    const totalBal = totalIncome - totalExpenses;
+
+
+    displayIncome.textContent = totalIncome.toFixed(2);
+    displayExpenses.textContent = totalExpenses.toFixed(2);
+    displayBal.textContent = totalBal.toFixed(2);
+    displayCount.textContent = taskArr.length;
+
+}
 
 
 modalForm.addEventListener("submit", (event) => {
@@ -122,14 +147,17 @@ modalForm.addEventListener("submit", (event) => {
     }
 
 
+    taskUi();
+
     console.log("Transaction submitted:", transaction);
 
 
     taskArr.push(transaction);
     localStorage.setItem("transactions", JSON.stringify(taskArr));
 
-    taskUi();
-
     modalContent.classList.remove("active");
     modalForm.reset();
 });
+
+
+updateDashboard();
