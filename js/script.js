@@ -14,6 +14,42 @@ const displayBal = document.querySelector("#displayBalance");
 const displayIncome = document.querySelector("#displayIncome");
 const displayCount = document.querySelector("#displayCount");
 const displayExpenses = document.querySelector("#displayexpense");
+const resetBtn = document.querySelector("#resetDataBtn");
+const settingsCurrency = document.querySelector("#settingCurrency");
+const ctx = document.getElementById("cashFlowChart").getContext("2d");
+
+
+
+
+const cashFlowChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+        labels: ["Income", "Expense"],
+        datasets: [{
+            label: "Amount",
+            data: [0, 0],
+            backgroundColor: [
+                "#22c55e", // Income
+                "#ef4444"  // Expense
+            ],
+            borderRadius: 8
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
 
 
 
@@ -100,6 +136,7 @@ let taskUi = () => {
 
 
 let updateDashboard = () => {
+
     taskUi();
 
     const totalIncome = taskArr.reduce((acc, tx) => {
@@ -112,13 +149,19 @@ let updateDashboard = () => {
 
     const totalBal = totalIncome - totalExpenses;
 
-
-    displayIncome.textContent = totalIncome.toFixed(2);
-    displayExpenses.textContent = totalExpenses.toFixed(2);
-    displayBal.textContent = totalBal.toFixed(2);
+    displayIncome.textContent = `$${totalIncome.toFixed(2)}`;
+    displayExpenses.textContent = `$${totalExpenses.toFixed(2)}`;
+    displayBal.textContent = `$${totalBal.toFixed(2)}`;
     displayCount.textContent = taskArr.length;
 
-}
+    // Update Chart
+    cashFlowChart.data.datasets[0].data = [
+        totalIncome,
+        totalExpenses
+    ];
+
+    cashFlowChart.update();
+};
 
 
 modalForm.addEventListener("submit", (event) => {
@@ -146,18 +189,27 @@ modalForm.addEventListener("submit", (event) => {
         category: txCategory.value
     }
 
-
-    taskUi();
-
     console.log("Transaction submitted:", transaction);
 
 
     taskArr.push(transaction);
     localStorage.setItem("transactions", JSON.stringify(taskArr));
 
+    updateDashboard();
+
     modalContent.classList.remove("active");
     modalForm.reset();
 });
+
+
+
+
+
+resetBtn.addEventListener("click", () => {
+    localStorage.removeItem("transactions");
+    taskArr.length = 0;
+    updateDashboard();
+})
 
 
 updateDashboard();
